@@ -18,12 +18,12 @@ export class CarService {
     return Car.toReadCar(car);
   }
 
-  async getById(carId: string): Promise<ReadCarDto> {
+  async getById(carId: string): Promise<CarDocument> {
     const car = await this.carModel.findById(carId);
     if (!car) {
       throw new NotFoundException(`Car by id ${carId} not found`);
     }
-    return Car.toReadCar(car);
+    return car;
   }
 
   async deleteById(carId: string): Promise<ReadCarDto> {

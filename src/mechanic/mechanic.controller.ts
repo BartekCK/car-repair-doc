@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post } from "@nestjs/common";
 import { ApiTags } from '@nestjs/swagger';
 import { MechanicService } from './mechanic.service';
 import { MechanicDto } from './dto/mechanic.dto';
@@ -14,6 +14,22 @@ export class MechanicController {
     @Body() creteNewMechanic: MechanicDto,
   ): Promise<ReadMechanicDto> {
     return this.mechanicService.create(creteNewMechanic);
+  }
+
+  @Patch(':mechanicId/car/:carId')
+  async assignCarToMechanic(
+    @Param('mechanicId') mechanicId: string,
+    @Param('carId') carId: string,
+  ): Promise<ReadMechanicDto> {
+    return this.mechanicService.assignCarToMechanic(mechanicId, carId);
+  }
+
+  @Delete(':mechanicId/car/:carId')
+  async deleteCarFromMechanic(
+    @Param('mechanicId') mechanicId: string,
+    @Param('carId') carId: string,
+  ): Promise<ReadMechanicDto> {
+    return this.mechanicService.unassignCarFromMechanic(mechanicId, carId);
   }
 
   @Get(':mechanicId')

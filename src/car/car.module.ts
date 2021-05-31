@@ -8,5 +8,6 @@ import { CarService } from './car.service';
   imports: [MongooseModule.forFeature([CarModelDefinition])],
   controllers: [CarController],
   providers: [CarService],
+  exports: [CarService],
 })
 export class CarModule {}

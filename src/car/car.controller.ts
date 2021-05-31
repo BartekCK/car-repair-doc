@@ -12,6 +12,7 @@ import { CarService } from './car.service';
 import { CarDto } from './dto/car.dto';
 import { CarPowerQueryDto } from './dto/car-power.query.dto';
 import { ReadCarDto } from './dto/read-car.dto';
+import { Car } from './schema/car.schema';
 
 @ApiTags('cars')
 @Controller('cars')
@@ -25,7 +26,8 @@ export class CarController {
 
   @Get(':carId')
   async getCarById(@Param('carId') carId: string): Promise<ReadCarDto> {
-    return this.carService.getById(carId);
+    const car = await this.carService.getById(carId);
+    return Car.toReadCar(car);
   }
 
   @Get()

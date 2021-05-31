@@ -27,7 +27,7 @@ export class Car extends Document {
   static toReadCar = (car: Car): ReadCarDto => {
     return {
       id: car.id,
-      ...omit(['_id', '__v'], car.toObject()),
+      ...omit(['_id', '__v'], car.toObject ? car.toObject() : { ...car }),
     };
   };
 }
