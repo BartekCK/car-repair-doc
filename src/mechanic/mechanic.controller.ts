@@ -1,4 +1,12 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post } from "@nestjs/common";
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
+} from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { MechanicService } from './mechanic.service';
 import { MechanicDto } from './dto/mechanic.dto';
@@ -42,5 +50,10 @@ export class MechanicController {
   @Get()
   async getAllMechanics(): Promise<ReadMechanicDto[]> {
     return this.mechanicService.getAll();
+  }
+
+  @Post('aggregate')
+  async aggregate(): Promise<any> {
+    return this.mechanicService.calculateMechanicsCars();
   }
 }

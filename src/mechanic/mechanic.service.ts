@@ -6,10 +6,10 @@ import {
   Mechanic,
   MechanicDocument,
   MechanicModelDefinition,
+  MechanicSchema,
 } from './schema/mechanic.schema';
 import { ReadMechanicDto } from './dto/read-mechanic.dto';
 import { CarService } from '../car/car.service';
-import { CarDocument } from '../car/schema/car.schema';
 
 @Injectable()
 export class MechanicService {
@@ -83,5 +83,12 @@ export class MechanicService {
     await car.save();
 
     return Mechanic.toReadMechanicDto(mechanic);
+  }
+
+  async calculateMechanicsCars() {
+    return this.mechanicModel.aggregate([
+      { $project: { count: { $size: '$cars' } } },
+      { $group: { _id: null, total_sum: { $sum: '$count' } } },
+    ]);
   }
 }
