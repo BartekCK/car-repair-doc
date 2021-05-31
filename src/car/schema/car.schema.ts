@@ -2,6 +2,8 @@ import { ModelDefinition, Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 import { ReadCarDto } from '../dto/read-car.dto';
 import { omit } from 'ramda';
+import { Mechanic } from '../../mechanic/schema/mechanic.schema';
+import * as mongoose from 'mongoose';
 
 export type CarDocument = Car & Document;
 
@@ -18,6 +20,9 @@ export class Car extends Document {
 
   @Prop()
   engineCapacity: number;
+
+  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Mechanic' })
+  mechanic?: Mechanic;
 
   static toReadCar = (car: Car): ReadCarDto => {
     return {
